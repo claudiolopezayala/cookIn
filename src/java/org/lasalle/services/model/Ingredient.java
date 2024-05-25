@@ -22,6 +22,12 @@ public class Ingredient {
     private String unitOfMasure;
     private int recipeId;//Stored only as id beacuse recipe has an array of ingredients
 
+    public Ingredient(int id, String ingredient, int recipeId) {
+        this.id = id;
+        this.ingredient = ingredient;
+        this.recipeId = recipeId;
+    }
+    
     public Ingredient(String ingredient, int recipeId) {
         this.ingredient = ingredient;
         this.recipeId = recipeId;

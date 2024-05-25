@@ -19,7 +19,8 @@ public class Follow {
     private User accountFollowed;
     private User accountThatFollows;
 
-    public Follow(User accountFollowed, User accountThatFollows) {
+    public Follow(int id, User accountFollowed, User accountThatFollows) {
+        this.id = id;
         this.accountFollowed = accountFollowed;
         this.accountThatFollows = accountThatFollows;
     }

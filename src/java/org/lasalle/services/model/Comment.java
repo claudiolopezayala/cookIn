@@ -22,22 +22,13 @@ public class Comment {
     private String comment;
     private String publishedDateTime;
     private int recipeId;//stored only as id because Recipe has an array of comments
-    private User user;
+    private int idUser;
     
-    public Comment(String comment, int recipeId, User user) {
+    public Comment(String comment, int recipeId, int idUser) {
         this.comment = comment;
         this.recipeId = recipeId;
-        this.user = user;
+        this.idUser = idUser;
     }
-    
-        
-    /*CREATE TABLE comments (
-  id integer PRIMARY KEY auto_increment,
-  comment varchar(255) not null,
-  publishedDateTime datetime default now(),
-  recipeId integer not null,
-  userId integer not null
-);*/
 
     public int getId() {
         return id;
@@ -63,12 +54,12 @@ public class Comment {
         this.recipeId = recipeId;
     }
 
-    public User getUser() {
-        return user;
+    public int getUser() {
+        return idUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(int user) {
+        this.idUser = user;
     }
 
 }
