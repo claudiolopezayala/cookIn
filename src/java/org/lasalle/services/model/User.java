@@ -8,6 +8,7 @@ package org.lasalle.services.model;
  *
  * @author Claudio
  */
+
 public class User {
     /*
 CREATE TABLE users (
@@ -19,24 +20,35 @@ CREATE TABLE users (
   password varchar(31) not null
 )
     */
+    private final int nameMaxLength = 15;
+    private final int usernameMaxLength = 15;
+    private final int bioMaxLength = 255;
+    private final int imageMaxLength = 255;
+    private final int passwordMaxLEngth = 31;
     
     private int id;
     private String name;
-    private String username;
+    private final String username;
     private String bio;
     private String image;
     private String password;
 
-    public User(int id, String name, String username, String password) {
+    public User(int id, String name, String username, String password) throws Exception {
+        if(username.length() > usernameMaxLength){
+            throw new Exception("username too long");
+        }
         this.id = id;
-        this.name = name;
+        this.setName(name);
         this.username = username;
-        this.password = password;
+        this.setPassword(password);
     }
-    public User(String name, String username, String password) {
+    public User(String name, String username, String password) throws Exception{
+        if(username.length() > usernameMaxLength){
+            throw new Exception("username too long");
+        }
         this.name = name;
         this.username = username;
-        this.password = password;
+        this.setPassword(password);
     }
 
     public int getId() {
@@ -47,7 +59,10 @@ CREATE TABLE users (
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) throws Exception {
+        if (name.length() > nameMaxLength){
+            throw new Exception("name too long");
+        }
         this.name = name;
     }
 
@@ -59,7 +74,10 @@ CREATE TABLE users (
         return bio;
     }
 
-    public void setBio(String bio) {
+    public final void setBio(String bio) throws Exception {
+        if(bio.length() > bioMaxLength){
+            throw new Exception("bio too long");
+        }
         this.bio = bio;
     }
 
@@ -67,7 +85,10 @@ CREATE TABLE users (
         return image;
     }
 
-    public void setImage(String image) {
+    public final void setImage(String image) throws Exception  {
+        if(image.length() > imageMaxLength){
+            throw new Exception("image too large");
+        }
         this.image = image;
     }
 
@@ -75,7 +96,10 @@ CREATE TABLE users (
         return password;
     }
 
-    public void setPassword(String password) {
+    public final void setPassword(String password) throws Exception  {
+        if (password.length() >  passwordMaxLEngth){
+            throw new Exception("password too long");
+        }
         this.password = password;
     }
     

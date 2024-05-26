@@ -17,15 +17,25 @@ public class Comment {
   recipeId integer not null,
   userId integer not null
 );*/
+    
+    private final int commentLength = 255;
 
     private int id;
     private String comment;
-    private String publishedDateTime;
-    private int recipeId;//stored only as id because Recipe has an array of comments
+    private final String publishedDateTime;
+    private int recipeId;
     private int idUser;
-    
-    public Comment(String comment, int recipeId, int idUser) {
-        this.comment = comment;
+
+    public Comment(int id, String comment, String publishedDateTime, int recipeId, int idUser) throws Exception {
+        this.id = id;
+        this.setComment(comment);
+        this.publishedDateTime = publishedDateTime;
+        this.recipeId = recipeId;
+        this.idUser = idUser;
+    }
+    public Comment(String comment, String publishedDateTime, int recipeId, int idUser) throws Exception {
+        this.setComment(comment);
+        this.publishedDateTime = publishedDateTime;
         this.recipeId = recipeId;
         this.idUser = idUser;
     }
@@ -38,8 +48,12 @@ public class Comment {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public final void setComment(String comment) throws Exception{
+        if (comment.length()>commentLength){
+            throw new Exception("Comment to large");
+        }
         this.comment = comment;
+        
     }
 
     public String getPublishedDateTime() {

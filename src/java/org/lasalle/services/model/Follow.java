@@ -16,33 +16,38 @@ public class Follow {
 );
 */
     private int id;
-    private User accountFollowed;
-    private User accountThatFollows;
+    private int accountFollowedId;
+    private int accountThatFollowsId;
 
-    public Follow(int id, User accountFollowed, User accountThatFollows) {
+    public Follow(int id, int accountFollowedId, int accountThatFollowsId) {
         this.id = id;
-        this.accountFollowed = accountFollowed;
-        this.accountThatFollows = accountThatFollows;
+        this.accountFollowedId = accountFollowedId;
+        this.accountThatFollowsId = accountThatFollowsId;
+    }
+
+    public Follow(int accountFollowedId, int accountThatFollowsId) {
+        this.accountFollowedId = accountFollowedId;
+        this.accountThatFollowsId = accountThatFollowsId;
     }
 
     public int getId() {
         return id;
     }
 
-    public User getAccountFollowed() {
-        return accountFollowed;
+    public int getAccountFollowedId() {
+        return accountFollowedId;
     }
 
-    public void setAccountFollowed(User accountFollowed) {
-        this.accountFollowed = accountFollowed;
+    public void setAccountFollowed(int accountFollowedId) {
+        this.accountFollowedId = accountFollowedId;
     }
 
-    public User getAccountThatFollows() {
-        return accountThatFollows;
+    public int getAccountThatFollows() {
+        return accountThatFollowsId;
     }
 
-    public void setAccountThatFollows(User accountThatFollows) {
-        this.accountThatFollows = accountThatFollows;
+    public void setAccountThatFollows(int accountThatFollowsId) {
+        this.accountThatFollowsId = accountThatFollowsId;
     }
     
     

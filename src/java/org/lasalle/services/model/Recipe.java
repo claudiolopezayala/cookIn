@@ -26,7 +26,7 @@ CREATE TABLE recipes (
     private String instructions;
     private int rations;
     private int timeToCookInMin;
-    private String publishedDateTime;//
+    private final String publishedDateTime;
     private int userId;
 
     public Recipe(int id, String title, String instructions, String publishedDateTime, int userId) {
