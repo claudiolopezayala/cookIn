@@ -20,6 +20,10 @@ CREATE TABLE recipes (
   publishedDateTime datetime default now(),
   userId integer not null
 );*/
+    private final int titleMaxLength = 63;
+    private final int imageMaxLength = 255;
+    private final int instructionsMaxLength = 65535;
+    
     private int id;
     private String title;
     private String image;
@@ -29,17 +33,17 @@ CREATE TABLE recipes (
     private final String publishedDateTime;
     private int userId;
 
-    public Recipe(int id, String title, String instructions, String publishedDateTime, int userId) {
+    public Recipe(int id, String title, String instructions, String publishedDateTime, int userId) throws Exception {
         this.id = id;
-        this.title = title;
-        this.instructions = instructions;
+        this.setTitle(title);
+        this.setInstructions(instructions);
         this.publishedDateTime = publishedDateTime;
         this.userId = userId;
     }
-    public Recipe(String title, String instructions, String publishedDateTime, int userId) {
-        this.title = title;
-        this.instructions = instructions;
-        this.publishedDateTime = publishedDateTime;
+    public Recipe(String title, String instructions, int userId) throws Exception {
+        this.setTitle(title);
+        this.setInstructions(instructions);
+        this.publishedDateTime = "";
         this.userId = userId;
     }
 
@@ -51,7 +55,10 @@ CREATE TABLE recipes (
         return title;
     }
 
-    public void setTitle(String title) {
+    public final void setTitle(String title) throws Exception{
+        if (title.length() > titleMaxLength){
+            throw new Exception("title too long");
+        }
         this.title = title;
     }
 
@@ -59,7 +66,10 @@ CREATE TABLE recipes (
         return image;
     }
 
-    public void setImage(String image) {
+    public final void setImage(String image) throws Exception {
+        if(image.length() > imageMaxLength){
+            throw new Exception("image too long");
+        }
         this.image = image;
     }
 
@@ -67,7 +77,10 @@ CREATE TABLE recipes (
         return instructions;
     }
 
-    public void setInstructions(String instructions) {
+    public final void setInstructions(String instructions) throws Exception {
+        if(instructions.length() > instructionsMaxLength){
+            throw new Exception("instructions too long");
+        }
         this.instructions = instructions;
     }
 

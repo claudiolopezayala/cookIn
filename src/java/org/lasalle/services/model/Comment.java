@@ -18,7 +18,7 @@ public class Comment {
   userId integer not null
 );*/
     
-    private final int commentLength = 255;
+    private final int commentMaxLength = 255;
 
     private int id;
     private String comment;
@@ -49,8 +49,8 @@ public class Comment {
     }
 
     public final void setComment(String comment) throws Exception{
-        if (comment.length()>commentLength){
-            throw new Exception("Comment to large");
+        if (comment.length()>commentMaxLength){
+            throw new Exception("comment too long");
         }
         this.comment = comment;
         
