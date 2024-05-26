@@ -19,15 +19,15 @@ public class Follow {
     private int accountFollowedId;
     private int accountThatFollowsId;
 
-    public Follow(int id, int accountFollowedId, int accountThatFollowsId) {
+    public Follow(int id, int accountFollowedId, int accountThatFollowsId)  throws Exception  {
         this.id = id;
-        this.accountFollowedId = accountFollowedId;
-        this.accountThatFollowsId = accountThatFollowsId;
+        this.setAccountFollowed(accountFollowedId);
+        this.setAccountThatFollows(accountThatFollowsId);
     }
 
-    public Follow(int accountFollowedId, int accountThatFollowsId) {
-        this.accountFollowedId = accountFollowedId;
-        this.accountThatFollowsId = accountThatFollowsId;
+    public Follow(int accountFollowedId, int accountThatFollowsId)  throws Exception  {
+        this.setAccountFollowed(accountFollowedId);
+        this.setAccountThatFollows(accountThatFollowsId);
     }
 
     public int getId() {
@@ -38,7 +38,10 @@ public class Follow {
         return accountFollowedId;
     }
 
-    public void setAccountFollowed(int accountFollowedId) {
+    public final void setAccountFollowed(int accountFollowedId) throws Exception {
+        if (accountFollowedId == this.accountThatFollowsId){
+            throw new Exception("an account can't follow itself");
+        }
         this.accountFollowedId = accountFollowedId;
     }
 
@@ -46,7 +49,10 @@ public class Follow {
         return accountThatFollowsId;
     }
 
-    public void setAccountThatFollows(int accountThatFollowsId) {
+    public final void setAccountThatFollows(int accountThatFollowsId)  throws Exception  {
+        if (accountThatFollowsId == this.accountFollowedId){
+            throw new Exception("an account can't follow itself");
+        }
         this.accountThatFollowsId = accountThatFollowsId;
     }
     
