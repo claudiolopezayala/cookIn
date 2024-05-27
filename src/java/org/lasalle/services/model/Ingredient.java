@@ -25,9 +25,11 @@ public class Ingredient {
     private String unitOfMeasure;
     private int recipeId;
 
-    public Ingredient(int id, String ingredient, int recipeId) throws Exception {
+    public Ingredient(int id, String ingredient, double amount, String unitOfMeasure, int recipeId) throws Exception {
         this.id = id;
         this.setIngredient(ingredient);
+        this.amount = amount;
+        this.unitOfMeasure = unitOfMeasure;
         this.recipeId = recipeId;
     }
     

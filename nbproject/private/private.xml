@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ControllerAuthentification.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Ingredient.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/User.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestDiagnostics.java</file>
+            <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ConnectionMysql.java</file>
+            <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestAuthentification.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Comment.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Follow.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Recipe.java</file>

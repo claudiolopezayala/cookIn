@@ -33,13 +33,17 @@ CREATE TABLE recipes (
     private final String publishedDateTime;
     private int userId;
 
-    public Recipe(int id, String title, String instructions, String publishedDateTime, int userId) throws Exception {
+    public Recipe(int id, String title, String image, String instructions, int rations, int timeToCookInMin, String publishedDateTime, int userId) throws Exception {
         this.id = id;
         this.setTitle(title);
+        this.image = image;
         this.setInstructions(instructions);
+        this.rations = rations;
+        this.timeToCookInMin = timeToCookInMin;
         this.publishedDateTime = publishedDateTime;
         this.userId = userId;
     }
+    
     public Recipe(String title, String instructions, int userId) throws Exception {
         this.setTitle(title);
         this.setInstructions(instructions);
