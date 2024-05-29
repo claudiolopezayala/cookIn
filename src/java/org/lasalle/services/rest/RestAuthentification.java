@@ -60,4 +60,45 @@ public class RestAuthentification {
         return Response.ok(out).build();
 
     }
+    
+    @Path("signup")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response signup (@FormParam("name") String name,
+                            @FormParam("username") String username,
+                            @FormParam("bio") String bio,
+                            @FormParam("image") String image,
+                            @FormParam("password") String password){
+        String out = "";
+        try {
+            ControllerAuthentification controller = new ControllerAuthentification();
+            User user = controller.createUser(name, username, bio, image, password);
+            out = """
+                  {
+                      "id": %s,
+                      "name": %s,
+                      "username": %s,   
+                      "bio": %s
+                  }
+                  """;
+            out = String.format(out, user.getId(), user.getName(), user.getUsername(), user.getBio());
+        } catch (Exception e){
+            out = """
+                  {"exception" = %s}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.FORBIDDEN).entity(out).build();
+            
+         } catch (Error e){
+             out = """
+                  {"error" = %s}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
+        return Response.ok(out).build();
+
+    }
 }

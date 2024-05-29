@@ -43,4 +43,23 @@ public class ControllerAuthentification {
         }
         throw new Exception("user not found");
     }
+    
+    public User createUser (String name, String username, String bio, String image, String password)throws Exception{
+        
+        String query = "INSERT INTO users (name, username, bio, image, password) VALUES (?, ?, ?, ?, ?)";
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, name);
+            pstm.setString(2, username);
+            pstm.setString(3, bio);
+            pstm.setString(4, image);
+            pstm.setString(5, password);
+            pstm.execute();
+        } catch(Exception | Error e) {
+           throw e;
+        }
+        return authentificateUser(username, password);
+    }
 }
