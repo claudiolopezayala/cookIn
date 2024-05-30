@@ -54,4 +54,41 @@ public class RestFollowers {
         return Response.ok(out).build();
 
     }
+    
+    @Path("followersCount")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response followersCount (@QueryParam("username") String username){
+        String out = "";
+        try {
+            System.out.println(username);
+            ControllerFollowers controller = new ControllerFollowers();
+            final int count = controller.getFollowersCount(username);
+            out = """
+                  {
+                      "followersCount": %s
+                  }
+                  """;
+            out = String.format(out, count);
+            
+            
+        } catch (Exception e){
+            out = """
+                  {"exception" = %s}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+            
+         } catch (Error e){
+             out = """
+                  {"error" = %s}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
+        return Response.ok(out).build();
+
+    }
 }

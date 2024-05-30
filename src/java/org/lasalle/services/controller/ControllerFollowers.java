@@ -39,4 +39,29 @@ public class ControllerFollowers {
         }
         return 0;
     }
+    
+    public int getFollowersCount (String username) throws Exception{
+        String query = "SELECT COUNT(*) AS followersCount FROM followers JOIN users ON users.id = followers.accountFollowedId WHERE users.username = ?";
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, username);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                final int followsCount = rs.getInt("followersCount");
+                rs.close();
+                pstm.close();
+                connMysql.close();
+                return followsCount;
+            }
+            rs.close();
+            pstm.close();
+            connMysql.close();
+            
+        } catch(Exception | Error e) {
+           throw e;
+        }
+        return 0;
+    }
 }
