@@ -14,11 +14,11 @@ import org.lasalle.services.model.User;
  */
 public class Main {
      public static void main(String[] args) {
-        ControllerFollowers controller = new ControllerFollowers();
+        ControllerUsers controller = new ControllerUsers();
         try{
-            List<User> follows = controller.getFollows("bobsmith");
+            User user = controller.UpdateUser("new name", "evanw", "new bio", "new image", "new password");
             Gson gson = new Gson();
-            String out = gson.toJson(follows);
+            String out = gson.toJson(user);
             System.out.println(out);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
