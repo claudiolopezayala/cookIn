@@ -7,6 +7,8 @@ package org.lasalle.services.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
+import java.util.List;
 import org.lasalle.services.model.User;
 
 /**
@@ -63,5 +65,35 @@ public class ControllerFollowers {
            throw e;
         }
         return 0;
+    }
+    
+    public List<User> getFollows (String username) throws Exception{
+        String query = "select userFollowers.id as id, userFollowers.name as name,userFollowers.username as username, userFollowers.bio as bio, userFollowers.image as image from followers join users userFollowers on userFollowers.id = followers.accountFollowedId join users follows on follows.id = followers.accountThatFollowsId where follows.username = ?;";
+        List<User> follows = new LinkedList();
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, username);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                final int id = rs.getInt("id");
+                final String name = rs.getString("name");
+                final String followUsername = rs.getString("username");
+                final String bio = rs.getString("bio");
+                final String image = rs.getString("image");
+                
+                User follow = new User(id, name, followUsername, bio, image);
+                
+                follows.add(follow);
+            }
+            rs.close();
+            pstm.close();
+            connMysql.close();
+            
+        } catch(Exception | Error e) {
+           throw e;
+        }
+        return follows;
     }
 }

@@ -10,7 +10,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
 import org.lasalle.services.controller.ControllerFollowers;
+import org.lasalle.services.model.User;
 
 /**
  *
@@ -24,7 +26,6 @@ public class RestFollowers {
     public Response followsCount (@QueryParam("username") String username){
         String out = "";
         try {
-            System.out.println(username);
             ControllerFollowers controller = new ControllerFollowers();
             final int count = controller.getFollowsCount(username);
             out = """
@@ -89,6 +90,46 @@ public class RestFollowers {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
          }
         return Response.ok(out).build();
+    }
+    
+    @Path("follows")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response follows (@QueryParam("username") String username){
+        String out = "[";
+        try {
+            ControllerFollowers controller = new ControllerFollowers();
+            final List<User> follows = controller.getFollows(username);
+            for (User user : follows){
+                String userString = """
+                                    {
+                                        "id": %s,
+                                        "name": %s,
+                                        "username": %s,   
+                                        "bio": %s
+                                    },
+                                    """;
+                userString = String.format(userString, user.getId(), user.getName(), user.getUsername(), user.getBio());
+                out += userString;
+            }        
+            out += "]";
+            return Response.ok(out).build();
+        } catch (Exception e){
+            out = """
+                  {"exception" = %s}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+            
+         } catch (Error e){
+             out = """
+                  {"error" = %s}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
 
     }
 }

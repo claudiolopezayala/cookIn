@@ -45,7 +45,19 @@ CREATE TABLE users (
         this.setPassword(password);
     }
     
-   
+    
+    public User(int id, String name, String username, String bio, String image) throws Exception {
+        if(username.length() > usernameMaxLength){
+            throw new Exception("username too long");
+        }
+        this.id = id;
+        this.setName(name);
+        this.username = username;
+        this.bio = bio;
+        this.image = image;
+    }
+    
+    
     public User(String name, String username, String password) throws Exception{
         if(username.length() > usernameMaxLength){
             throw new Exception("username too long");

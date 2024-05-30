@@ -5,6 +5,7 @@
 package org.lasalle.services.controller;
 
 import com.google.gson.Gson;
+import java.util.List;
 import org.lasalle.services.model.User;
 
 /**
@@ -15,9 +16,9 @@ public class Main {
      public static void main(String[] args) {
         ControllerFollowers controller = new ControllerFollowers();
         try{
-            int count = controller.getFollowsCount("bobsmith");
+            List<User> follows = controller.getFollows("bobsmith");
             Gson gson = new Gson();
-            String out = gson.toJson(count);
+            String out = gson.toJson(follows);
             System.out.println(out);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
