@@ -13,11 +13,11 @@ import org.lasalle.services.model.User;
  */
 public class Main {
      public static void main(String[] args) {
-        ControllerAuthentification controller = new ControllerAuthentification();
+        ControllerFollowers controller = new ControllerFollowers();
         try{
-            User user = controller.createUser("name", "username", "bio", "image", "password");
+            int count = controller.getFollowsCount("bobsmith");
             Gson gson = new Gson();
-            String out = gson.toJson(user);
+            String out = gson.toJson(count);
             System.out.println(out);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
