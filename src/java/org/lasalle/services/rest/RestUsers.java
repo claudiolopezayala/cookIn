@@ -34,15 +34,15 @@ public class RestUsers {
             out = """
                   {
                       "id": %s,
-                      "name": %s,
-                      "username": %s,   
-                      "bio": %s
+                      "name": "%s",
+                      "username": "%s",   
+                      "bio": "%s"
                   }
                   """;
             out = String.format(out, user.getId(), user.getName(), user.getUsername(), user.getBio());
         } catch (Exception e){
             out = """
-                  {"exception" = %s}
+                  {"exception" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             
@@ -50,7 +50,7 @@ public class RestUsers {
             
          } catch (Error e){
              out = """
-                  {"error" = %s}
+                  {"error" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             

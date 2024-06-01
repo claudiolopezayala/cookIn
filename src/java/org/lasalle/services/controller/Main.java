@@ -6,6 +6,8 @@ package org.lasalle.services.controller;
 
 import com.google.gson.Gson;
 import java.util.List;
+import org.lasalle.services.model.Comment;
+import org.lasalle.services.model.Recipe;
 import org.lasalle.services.model.User;
 
 /**
@@ -14,11 +16,13 @@ import org.lasalle.services.model.User;
  */
 public class Main {
      public static void main(String[] args) {
-        ControllerUsers controller = new ControllerUsers();
+        ControllerComments controllerComments = new ControllerComments();
+        ControllerUsers controllerUsers = new ControllerUsers();
+        ControllerRecipe controllerRecipe = new ControllerRecipe();
         try{
-            User user = controller.UpdateUser("new name", "evanw", "new bio", "new image", "new password");
+            Recipe response = controllerRecipe.GetRecipe(1);
             Gson gson = new Gson();
-            String out = gson.toJson(user);
+            String out = gson.toJson(response);
             System.out.println(out);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());

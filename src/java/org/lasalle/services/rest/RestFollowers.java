@@ -30,7 +30,7 @@ public class RestFollowers {
             final int count = controller.getFollowsCount(username);
             out = """
                   {
-                      "followsCount": %s
+                      "followsCount": "%s"
                   }
                   """;
             out = String.format(out, count);
@@ -38,7 +38,7 @@ public class RestFollowers {
             
         } catch (Exception e){
             out = """
-                  {"exception" = %s}
+                  {"exception" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             
@@ -46,7 +46,7 @@ public class RestFollowers {
             
          } catch (Error e){
              out = """
-                  {"error" = %s}
+                  {"error" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             
@@ -67,7 +67,7 @@ public class RestFollowers {
             final int count = controller.getFollowersCount(username);
             out = """
                   {
-                      "followersCount": %s
+                      "followersCount": "%s"
                   }
                   """;
             out = String.format(out, count);
@@ -75,7 +75,7 @@ public class RestFollowers {
             
         } catch (Exception e){
             out = """
-                  {"exception" = %s}
+                  {"exception" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             
@@ -83,7 +83,7 @@ public class RestFollowers {
             
          } catch (Error e){
              out = """
-                  {"error" = %s}
+                  {"error" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             
@@ -104,9 +104,9 @@ public class RestFollowers {
                 String userString = """
                                     {
                                         "id": %s,
-                                        "name": %s,
-                                        "username": %s,   
-                                        "bio": %s
+                                        "name": "%s",
+                                        "username": "%s",   
+                                        "bio": "%s"
                                     },
                                     """;
                 userString = String.format(userString, user.getId(), user.getName(), user.getUsername(), user.getBio());
@@ -116,7 +116,7 @@ public class RestFollowers {
             return Response.ok(out).build();
         } catch (Exception e){
             out = """
-                  {"exception" = %s}
+                  {"exception" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             
@@ -124,7 +124,7 @@ public class RestFollowers {
             
          } catch (Error e){
              out = """
-                  {"error" = %s}
+                  {"error" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             

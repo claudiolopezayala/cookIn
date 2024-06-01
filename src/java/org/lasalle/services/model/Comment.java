@@ -68,11 +68,11 @@ public class Comment {
         this.recipeId = recipeId;
     }
 
-    public int getUser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setUser(int user) {
+    public void setIdUser(int user) {
         this.idUser = user;
     }
 
