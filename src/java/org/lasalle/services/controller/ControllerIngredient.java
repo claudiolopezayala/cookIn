@@ -24,6 +24,9 @@ public class ControllerIngredient {
             pstm.setString(3, unitOfMeasure);
             pstm.setInt(4, recipeId);
             pstm.execute();
+
+            pstm.close();
+            connMysql.close();
         } catch(Exception | Error e) {
            throw e;
         }

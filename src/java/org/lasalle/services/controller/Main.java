@@ -21,8 +21,8 @@ public class Main {
         ControllerRecipe controllerRecipe = new ControllerRecipe();
         ControllerIngredient controllerIngredient = new ControllerIngredient();
         try{
-            controllerIngredient.createIngredient("ingredient", 10.52, "ssss", 1);
-//            Recipe response = controllerRecipe.getRecipe(1);
+            controllerRecipe.createRecipe("ww", "ww", "ww", 1, 1, 1);
+//            User response = controllerUsers.getUser(1);
 //            Gson gson = new Gson();
 //            String out = gson.toJson(response);
 //            System.out.println(out);

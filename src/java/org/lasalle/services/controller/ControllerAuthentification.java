@@ -57,6 +57,9 @@ public class ControllerAuthentification {
             pstm.setString(4, image);
             pstm.setString(5, password);
             pstm.execute();
+
+            pstm.close();
+            connMysql.close();
         } catch(Exception | Error e) {
            throw e;
         }

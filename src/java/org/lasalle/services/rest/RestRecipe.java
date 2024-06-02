@@ -13,7 +13,6 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
-import org.lasalle.services.controller.ControllerAuthentification;
 import org.lasalle.services.controller.ControllerComments;
 import org.lasalle.services.controller.ControllerRecipe;
 import org.lasalle.services.controller.ControllerUsers;
@@ -37,12 +36,25 @@ public class RestRecipe {
                             @FormParam("rations") int rations,
                             @FormParam("timeToCook") int timeToCook,
                             @FormParam("userId") int userId ){
-        
+        String out = "";
         try {   
             ControllerRecipe controller = new ControllerRecipe();
-            controller.createRecipe(title, image, instructions, rations, timeToCook, userId);
+            Recipe recipe = controller.createRecipe(title, image, instructions, rations, timeToCook, userId);
+            out = """
+                  {
+                  "id" : %s,
+                  "title" : "%s",
+                  "image" : "%s",
+                  "instructions" : "%s",
+                  "rations" : %s,
+                  "timeToCook" : %s,
+                  "publishedDateTime": "%s",
+                  "userId" : %s,
+                  }
+                  """;
+            out = String.format(out, recipe.getId(), recipe.getImage(), recipe.getTitle(), recipe.getInstructions(), recipe.getRations(), recipe.getTimeToCookInMin(), recipe.getPublishedDateTime(), recipe.getUserId());
         } catch (Exception e){
-            String out = """
+            out = """
                   {"exception" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
@@ -50,14 +62,14 @@ public class RestRecipe {
             return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
             
          } catch (Error e){
-            String out = """
+            out = """
                   {"error" : "%s"}
                   """;
             out = String.format(out, e.getMessage());
             
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
          }
-        return Response.ok().build();
+        return Response.ok(out).build();
 
     }
     

@@ -26,6 +26,9 @@ public class ControllerUsers {
             pstm.setString(4, password);
             pstm.setString(5, username);
             pstm.execute();
+
+            pstm.close();
+            connMysql.close();
         } catch(Exception | Error e) {
            throw e;
         }

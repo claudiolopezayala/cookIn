@@ -4,6 +4,7 @@
  */
 package org.lasalle.services.controller;
 
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,22 +48,31 @@ public class ControllerRecipe {
         throw new Exception("user not found");
     }
     
-    public void createRecipe (String title, String image, String instructions, int rations, int timeToCook, int userId)throws Exception{    
+    public Recipe createRecipe (String title, String image, String instructions, int rations, int timeToCook, int userId)throws Exception{    
         String query = "INSERT INTO recipes (title, image, instructions, rations, timeToCook, userId) VALUES (?, ?, ?, ?, ?, ?)";
         
         try {
             ConnectionMysql connMysql = new ConnectionMysql();
             Connection conn = connMysql.open();
-            PreparedStatement pstm = conn.prepareStatement(query);
+            PreparedStatement pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, title);
             pstm.setString(2, image);
             pstm.setString(3, instructions);
             pstm.setInt(4, rations);
             pstm.setInt(5, timeToCook);
             pstm.setInt(6, userId);
-            pstm.execute();
+            pstm.executeUpdate();
+            ResultSet rs = pstm.getGeneratedKeys();
+            if (rs.next()) {
+                final int id = rs.getInt(1);
+                rs.close();
+                pstm.close();
+                connMysql.close();
+                return getRecipe(id);
+            }
         } catch(Exception | Error e) {
            throw e;
         }
+        throw new Error("Recipe not found");
     }
 }
