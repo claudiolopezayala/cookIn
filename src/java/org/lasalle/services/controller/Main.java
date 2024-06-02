@@ -19,11 +19,13 @@ public class Main {
         ControllerComments controllerComments = new ControllerComments();
         ControllerUsers controllerUsers = new ControllerUsers();
         ControllerRecipe controllerRecipe = new ControllerRecipe();
+        ControllerIngredient controllerIngredient = new ControllerIngredient();
         try{
-            Recipe response = controllerRecipe.GetRecipe(1);
-            Gson gson = new Gson();
-            String out = gson.toJson(response);
-            System.out.println(out);
+            controllerIngredient.createIngredient("ingredient", 10.52, "ssss", 1);
+//            Recipe response = controllerRecipe.getRecipe(1);
+//            Gson gson = new Gson();
+//            String out = gson.toJson(response);
+//            System.out.println(out);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
             

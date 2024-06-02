@@ -15,7 +15,7 @@ import org.lasalle.services.model.User;
  * @author Claudio
  */
 public class ControllerRecipe {
-    public Recipe GetRecipe (int id)throws Exception {
+    public Recipe getRecipe (int id)throws Exception {
         String query = "SELECT * FROM recipes WHERE id = ?";
         try {
             ConnectionMysql connMysql = new ConnectionMysql();
@@ -45,5 +45,24 @@ public class ControllerRecipe {
            throw e;
         }
         throw new Exception("user not found");
+    }
+    
+    public void createRecipe (String title, String image, String instructions, int rations, int timeToCook, int userId)throws Exception{    
+        String query = "INSERT INTO recipes (title, image, instructions, rations, timeToCook, userId) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, title);
+            pstm.setString(2, image);
+            pstm.setString(3, instructions);
+            pstm.setInt(4, rations);
+            pstm.setInt(5, timeToCook);
+            pstm.setInt(6, userId);
+            pstm.execute();
+        } catch(Exception | Error e) {
+           throw e;
+        }
     }
 }

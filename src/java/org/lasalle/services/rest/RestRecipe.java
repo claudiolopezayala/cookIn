@@ -4,15 +4,17 @@
  */
 package org.lasalle.services.rest;
 
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
+import org.lasalle.services.controller.ControllerAuthentification;
 import org.lasalle.services.controller.ControllerComments;
-import org.lasalle.services.controller.ControllerFollowers;
 import org.lasalle.services.controller.ControllerRecipe;
 import org.lasalle.services.controller.ControllerUsers;
 import org.lasalle.services.model.Comment;
@@ -25,7 +27,40 @@ import org.lasalle.services.model.User;
  */
 
 @Path("recipes")
-public class RestRecipe {
+public class RestRecipe {    
+    @Path("recipe")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response recipe (@FormParam("title") String title,
+                            @FormParam("image") String image,
+                            @FormParam("instructions") String instructions,
+                            @FormParam("rations") int rations,
+                            @FormParam("timeToCook") int timeToCook,
+                            @FormParam("userId") int userId ){
+        
+        try {   
+            ControllerRecipe controller = new ControllerRecipe();
+            controller.createRecipe(title, image, instructions, rations, timeToCook, userId);
+        } catch (Exception e){
+            String out = """
+                  {"exception" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+            
+         } catch (Error e){
+            String out = """
+                  {"error" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
+        return Response.ok().build();
+
+    }
+    
     @Path("completeRecipe")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -36,8 +71,8 @@ public class RestRecipe {
             ControllerUsers controllerUsers = new ControllerUsers();
             ControllerComments controllerComments = new ControllerComments();
             
-            final Recipe recipe = controllerRecipe.GetRecipe(id);
-            final User user = controllerUsers.GetUser(recipe.getUserId());
+            final Recipe recipe = controllerRecipe.getRecipe(id);
+            final User user = controllerUsers.getUser(recipe.getUserId());
             final List<Comment> comments = controllerComments.getCommentsOfRecipe(recipe.getId());
             
             out += """
@@ -70,13 +105,13 @@ public class RestRecipe {
                     user.getUsername(),
                     user.getBio());
             for (Comment comment : comments){
-                User commentor = controllerUsers.GetUser(comment.getIdUser());
+                User comentator = controllerUsers.getUser(comment.getIdUser());
                 String commentJson = """
                                      {
                                      "id": %s,
                                      "comment": "%s",
                                      "publishedDateTime": "%s",
-                                     "commentor":{
+                                        "commentator":{
                                         "id": %s,
                                         "name": "%s",
                                         "username": "%s",   
@@ -88,10 +123,10 @@ public class RestRecipe {
                         comment.getId(),
                         comment.getComment(),
                         comment.getPublishedDateTime(),
-                        commentor.getId(),
-                        commentor.getName(),
-                        commentor.getUsername(),
-                        commentor.getBio());
+                        comentator.getId(),
+                        comentator.getName(),
+                        comentator.getUsername(),
+                        comentator.getBio());
             }
             out += "]}";
             return Response.ok(out).build();
@@ -113,4 +148,6 @@ public class RestRecipe {
          }
 
     }
+    
+    
 }

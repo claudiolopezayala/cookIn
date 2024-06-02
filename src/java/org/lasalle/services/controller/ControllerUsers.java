@@ -14,7 +14,7 @@ import java.sql.ResultSet;
  * @author Claudio
  */
 public class ControllerUsers {
-    public User UpdateUser (String name, String username, String bio, String image, String password) throws Exception{     
+    public User updateUser (String name, String username, String bio, String image, String password) throws Exception{     
         String query = "UPDATE users SET name = ?, bio = ?, image = ?, password = ? WHERE username = ?";
         try {
             ConnectionMysql connMysql = new ConnectionMysql();
@@ -32,7 +32,7 @@ public class ControllerUsers {
         ControllerAuthentification controller = new ControllerAuthentification();
         return controller.authentificateUser(username, password);
     }
-    public User GetUser (int id)throws Exception {
+    public User getUser (int id)throws Exception {
         String query = "SELECT * FROM users WHERE id = ?";
         try {
             ConnectionMysql connMysql = new ConnectionMysql();

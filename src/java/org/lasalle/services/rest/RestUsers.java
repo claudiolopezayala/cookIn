@@ -30,7 +30,7 @@ public class RestUsers {
         String out = "";
         try {
             ControllerUsers controller = new ControllerUsers();
-            User user = controller.UpdateUser(name, username, bio, image, password);
+            User user = controller.updateUser(name, username, bio, image, password);
             out = """
                   {
                       "id": %s,
