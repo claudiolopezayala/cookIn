@@ -45,7 +45,7 @@ public class ControllerRecipe {
         } catch(Exception | Error e) {
            throw e;
         }
-        throw new Exception("user not found");
+        throw new Exception("recipe not found");
     }
     
     public Recipe createRecipe (String title, String image, String instructions, int rations, int timeToCook, int userId)throws Exception{    

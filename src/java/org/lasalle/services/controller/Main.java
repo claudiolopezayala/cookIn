@@ -7,6 +7,7 @@ package org.lasalle.services.controller;
 import com.google.gson.Gson;
 import java.util.List;
 import org.lasalle.services.model.Comment;
+import org.lasalle.services.model.Ingredient;
 import org.lasalle.services.model.Recipe;
 import org.lasalle.services.model.User;
 
@@ -21,11 +22,11 @@ public class Main {
         ControllerRecipe controllerRecipe = new ControllerRecipe();
         ControllerIngredient controllerIngredient = new ControllerIngredient();
         try{
-            controllerRecipe.createRecipe("ww", "ww", "ww", 1, 1, 1);
-//            User response = controllerUsers.getUser(1);
-//            Gson gson = new Gson();
-//            String out = gson.toJson(response);
-//            System.out.println(out);
+//            controllerRecipe.createRecipe("ww", "ww", "ww", 1, 1, 1);
+            List<Ingredient> response = controllerIngredient.getRecipeIngredients(1);
+            Gson gson = new Gson();
+            String out = gson.toJson(response);
+            System.out.println(out);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
             

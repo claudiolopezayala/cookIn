@@ -14,9 +14,11 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.lasalle.services.controller.ControllerComments;
+import org.lasalle.services.controller.ControllerIngredient;
 import org.lasalle.services.controller.ControllerRecipe;
 import org.lasalle.services.controller.ControllerUsers;
 import org.lasalle.services.model.Comment;
+import org.lasalle.services.model.Ingredient;
 import org.lasalle.services.model.Recipe;
 import org.lasalle.services.model.User;
 
@@ -82,10 +84,12 @@ public class RestRecipe {
             ControllerRecipe controllerRecipe = new ControllerRecipe();
             ControllerUsers controllerUsers = new ControllerUsers();
             ControllerComments controllerComments = new ControllerComments();
+            ControllerIngredient cntrollerIngredient = new ControllerIngredient();
             
             final Recipe recipe = controllerRecipe.getRecipe(id);
             final User user = controllerUsers.getUser(recipe.getUserId());
             final List<Comment> comments = controllerComments.getCommentsOfRecipe(recipe.getId());
+            final List<Ingredient> ingredients = cntrollerIngredient.getRecipeIngredients(recipe.getId());
             
             out += """
                     "id": %s,
@@ -101,7 +105,7 @@ public class RestRecipe {
                         "username": "%s",   
                         "bio": "%s"
                     },
-                   "comments": [
+                   "Ingredients":[
                     """;
             
             out = String.format(out,
@@ -116,6 +120,22 @@ public class RestRecipe {
                     user.getName(),
                     user.getUsername(),
                     user.getBio());
+            for (Ingredient ingredient : ingredients){
+                String ingredientJSON = """
+                                        {
+                                        "id": %s,
+                                        "ingredient": "%s",
+                                        "amount": %s,
+                                        "unitOfMeasure": "%s",
+                                        },
+                                        """;
+                out += String.format(ingredientJSON, ingredient.getId(), ingredient.getIngredient(), ingredient.getAmount(), ingredient.getUnitOfMeasure());
+            }
+            out += """
+                   ],
+                   "comments": [
+                   """;
+            
             for (Comment comment : comments){
                 User comentator = controllerUsers.getUser(comment.getIdUser());
                 String commentJson = """
