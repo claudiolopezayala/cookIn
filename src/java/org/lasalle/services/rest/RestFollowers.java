@@ -4,7 +4,9 @@
  */
 package org.lasalle.services.rest;
 
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
@@ -12,6 +14,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.lasalle.services.controller.ControllerFollowers;
+import org.lasalle.services.controller.ControllerRecipe;
+import org.lasalle.services.model.Follow;
 import org.lasalle.services.model.User;
 
 /**
@@ -124,6 +128,41 @@ public class RestFollowers {
             
          } catch (Error e){
              out = """
+                  {"error" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
+
+    }
+  
+    @Path("follow")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response follow (@FormParam("accountFollowedId") int accountFollowedId,
+                            @FormParam("accountThatFollowsId") int accountThatFollowsId ){
+        try {   
+            ControllerFollowers controller = new ControllerFollowers();
+            Follow follow = controller.addFollow(accountFollowedId, accountThatFollowsId);
+            String out = """
+                  {
+                  "accountFollowedId": %s,
+                  "accountThatFollowsId": %s      
+                  }
+                  """;
+            out = String.format(out, follow.getAccountFollowedId(), follow.getAccountThatFollows());
+            return Response.ok(out).build();
+        } catch (Exception e){
+            String out = """
+                  {"exception" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+            
+         } catch (Error e){
+            String out = """
                   {"error" : "%s"}
                   """;
             out = String.format(out, e.getMessage());

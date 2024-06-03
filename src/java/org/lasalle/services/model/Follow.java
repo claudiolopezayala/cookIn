@@ -54,7 +54,5 @@ public class Follow {
             throw new Exception("an account can't follow itself");
         }
         this.accountThatFollowsId = accountThatFollowsId;
-    }
-    
-    
+    }  
 }

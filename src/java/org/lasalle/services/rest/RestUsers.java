@@ -22,7 +22,7 @@ public class RestUsers {
     @Path("user")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signup (@FormParam("name") String name,
+    public Response updateUser (@FormParam("name") String name,
                             @FormParam("username") String username,
                             @FormParam("bio") String bio,
                             @FormParam("image") String image,

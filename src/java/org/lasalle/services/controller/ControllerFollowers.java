@@ -7,8 +7,11 @@ package org.lasalle.services.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+import org.lasalle.services.model.Follow;
+import org.lasalle.services.model.Ingredient;
 import org.lasalle.services.model.User;
 
 /**
@@ -95,5 +98,59 @@ public class ControllerFollowers {
            throw e;
         }
         return follows;
+    }
+    
+    public Follow getFollow (int id) throws Exception{
+        String query = "SELECT * FROM followers WHERE id = ?";
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                final int accountFollowedId = rs.getInt("accountFollowedId");
+                final int accountThatFollowsId = rs.getInt("accountThatFollowsId");
+                Follow follow = new Follow(id, accountFollowedId, accountThatFollowsId);
+                rs.close();
+                pstm.close();
+                connMysql.close();
+                return follow;
+            }
+            rs.close();
+            pstm.close();
+            connMysql.close();
+            
+        } catch(Exception | Error e) {
+           throw e;
+        }
+        throw new Exception("Follow not found");
+    }
+    
+    public Follow addFollow (int accountFollowedId, int accountThatFollowsId) throws Exception{
+        String query = "INSERT INTO followers (accountFollowedId, accountThatFollowsId) VALUES (?, ?)";
+        
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstm.setInt(1, accountFollowedId);
+            pstm.setInt(2, accountThatFollowsId);
+            pstm.executeUpdate();
+            ResultSet rs = pstm.getGeneratedKeys();
+            if (rs.next()) {
+                final int id = rs.getInt(1);
+                rs.close();
+                pstm.close();
+                connMysql.close();
+                return getFollow(id);
+            }
+            pstm.close();
+            connMysql.close();
+            
+        } catch(Exception | Error e) {
+           throw e;
+        }
+        throw new Error("Follow not found");
     }
 }

@@ -102,6 +102,6 @@ public class ControllerIngredient {
         } catch(Exception | Error e) {
            throw e;
         }
-        throw new Exception("user not found");
+        throw new Exception("ingredient not found");
     }
 }
