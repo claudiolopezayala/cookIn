@@ -24,11 +24,11 @@ public class Main {
         ControllerIngredient controllerIngredient = new ControllerIngredient();
         ControllerFollowers controllerFollowers = new ControllerFollowers();
         try{
-//            controllerRecipe.createRecipe("ww", "ww", "ww", 1, 1, 1);
-            Follow response = controllerFollowers.addFollow(2, 5);
-            Gson gson = new Gson();
-            String out = gson.toJson(response);
-            System.out.println(out);
+            controllerFollowers.deleteFollow(3, 2);
+//            List<User> response = controllerUsers.getUsersLike("c");
+//            Gson gson = new Gson();
+//            String out = gson.toJson(response);
+//            System.out.println(out);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
             

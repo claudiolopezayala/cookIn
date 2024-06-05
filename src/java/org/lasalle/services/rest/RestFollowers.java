@@ -4,6 +4,7 @@
  */
 package org.lasalle.services.rest;
 
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -153,6 +154,34 @@ public class RestFollowers {
                   """;
             out = String.format(out, follow.getAccountFollowedId(), follow.getAccountThatFollows());
             return Response.ok(out).build();
+        } catch (Exception e){
+            String out = """
+                  {"exception" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+            
+         } catch (Error e){
+            String out = """
+                  {"error" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
+
+    }
+    
+    @Path("follow")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deltefollow (@FormParam("accountFollowedId") int accountFollowedId,
+                            @FormParam("accountThatFollowsId") int accountThatFollowsId ){
+        try {   
+            ControllerFollowers controller = new ControllerFollowers();
+            controller.deleteFollow(accountFollowedId, accountThatFollowsId);
+            return Response.ok().build();
         } catch (Exception e){
             String out = """
                   {"exception" : "%s"}

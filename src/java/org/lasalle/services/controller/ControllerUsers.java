@@ -8,6 +8,9 @@ import org.lasalle.services.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
+import java.util.List;
+import org.lasalle.services.model.Ingredient;
 
 /**
  *
@@ -62,5 +65,39 @@ public class ControllerUsers {
            throw e;
         }
         throw new Exception("user not found");
+    }
+   
+    public List<User> getUsersLike(String serchTerm) throws Exception{
+        String query = "SELECT * FROM users WHERE name LIKE CONCAT('%', ?, '%') OR username LIKE CONCAT('%', ?, '%') ORDER BY CASE WHEN name LIKE CONCAT(?, '%') THEN 1 WHEN username LIKE CONCAT(?, '%') THEN 2 WHEN name LIKE CONCAT('%', ?, '%') THEN 3 WHEN username LIKE CONCAT('%', ?, '%') THEN 4 ELSE 5 END LIMIT 20;";
+        List<User> users = new LinkedList();
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, serchTerm);
+            pstm.setString(2, serchTerm);
+            pstm.setString(3, serchTerm);
+            pstm.setString(4, serchTerm);
+            pstm.setString(5, serchTerm);
+            pstm.setString(6, serchTerm);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                final int id = rs.getInt("id");
+                final String name = rs.getString("name");
+                final String username = rs.getString("username");
+                final String bio = rs.getString("bio");
+                final String image = rs.getString("image");
+                
+                User user = new User(id, name, username, bio, image);
+                users.add(user);
+            }
+            rs.close();
+            pstm.close();
+            connMysql.close();
+            
+        } catch(Exception | Error e) {
+           throw e;
+        }
+        return users;
     }
 }

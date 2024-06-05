@@ -20,6 +20,24 @@ import org.lasalle.services.model.User;
  */
 public class ControllerFollowers {
     
+    public void deleteFollow (int accountFollowedId, int accountThatFollowsId)throws Exception{
+                String query = "delete from followers where accountFollowedId = ? and accountThatFollowsId = ?";
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, accountFollowedId);
+            pstm.setInt(2, accountThatFollowsId);
+            pstm.execute();
+            
+            pstm.close();
+            connMysql.close();
+            
+        } catch(Exception | Error e) {
+           throw e;
+        }
+    }
+    
     public int getFollowsCount (String username) throws Exception{
         String query = "SELECT COUNT(*) AS followsCount FROM followers JOIN users ON users.id = followers.accountThatFollowsId WHERE users.username = ?";
         try {

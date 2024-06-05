@@ -7,6 +7,7 @@
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestFollowers.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ControllerComments.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Ingredient.java</file>
+            <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestIngredients.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Comment.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ControllerRecipe.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ControllerUsers.java</file>
@@ -14,8 +15,10 @@
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ControllerFollowers.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/User.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestDiagnostics.java</file>
+            <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ConnectionMysql.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestAuthentification.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestRecipe.java</file>
+            <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/controller/ControllerIngredient.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/rest/RestUsers.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Follow.java</file>
             <file>file:/C:/Users/Claudio/Documents/NetBeansProjects/Api_Rest_Cook_In/src/java/org/lasalle/services/model/Recipe.java</file>

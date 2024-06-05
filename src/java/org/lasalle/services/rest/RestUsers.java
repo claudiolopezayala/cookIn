@@ -5,12 +5,17 @@
 package org.lasalle.services.rest;
 
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
+import org.lasalle.services.controller.ControllerIngredient;
 import org.lasalle.services.controller.ControllerUsers;
+import org.lasalle.services.model.Ingredient;
 import org.lasalle.services.model.User;
 
 /**
@@ -19,6 +24,48 @@ import org.lasalle.services.model.User;
  */
 @Path("users")
 public class RestUsers {
+    
+    @Path("users")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ingredients (@QueryParam("searchTerm") String searchTerm){
+        String out = "[";
+        try {
+            ControllerUsers controller = new ControllerUsers();
+            final List<User> users = controller.getUsersLike(searchTerm);
+            for (User user : users){
+                String userString = """
+                                    {
+                                        "id": %s,
+                                        "name": "%s",
+                                        "username": "%s",   
+                                        "bio": "%s",
+                                        "image": "%s"
+                                    },
+                                    """;
+                out += String.format(userString, user.getId(), user.getName(), user.getUsername(), user.getBio(), user.getImage());
+            }        
+            out += "]";
+            return Response.ok(out).build();
+        } catch (Exception e){
+            out = """
+                  {"exception" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+            
+         } catch (Error e){
+             out = """
+                  {"error" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
+
+    }
+    
     @Path("user")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
