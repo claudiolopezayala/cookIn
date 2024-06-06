@@ -4,6 +4,7 @@
  */
 package org.lasalle.services.rest;
 
+import com.google.gson.Gson;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -14,6 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.lasalle.services.controller.ControllerComments;
+import org.lasalle.services.controller.ControllerFollowers;
 import org.lasalle.services.controller.ControllerIngredient;
 import org.lasalle.services.controller.ControllerRecipe;
 import org.lasalle.services.controller.ControllerUsers;
@@ -28,7 +30,55 @@ import org.lasalle.services.model.User;
  */
 
 @Path("recipes")
-public class RestRecipe {    
+public class RestRecipe {
+    
+    @Path("recipes")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response recipes (@QueryParam("userId") int userId){
+        String out = "[";
+        try {
+            ControllerRecipe controller = new ControllerRecipe();
+            final List<Recipe> recipes = controller.getUsersRecipes(userId);
+            for (Recipe recipe : recipes){
+                String userString = """
+                                    {
+                                        "id": %s,
+                                        "title": "%s",
+                                        "image": "%s",   
+                                        "instructions": "%s",
+                                        "rations": %s,
+                                        "timeToCook": %s,
+                                        "publishedDateTime": "%s",
+                                        "userId": %s
+                                    },
+                                    """;
+                Gson gson = new Gson();
+                System.out.println(gson.toJson(recipe.getInstructions()));
+                userString = String.format(userString, recipe.getId(), recipe.getTitle(), recipe.getImage(), recipe.getInstructions(), recipe.getRations(), recipe.getTimeToCookInMin(), recipe.getPublishedDateTime(), recipe.getUserId());
+                out += userString;
+            }        
+            out += "]";
+            return Response.ok(out).build();
+        } catch (Exception e){
+            out = """
+                  {"exception" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+            
+         } catch (Error e){
+             out = """
+                  {"error" : "%s"}
+                  """;
+            out = String.format(out, e.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+         }
+
+    }
+    
     @Path("recipe")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -107,7 +157,8 @@ public class RestRecipe {
                     },
                    "Ingredients":[
                     """;
-            
+            Gson gson = new Gson();
+            System.out.println(gson.toJson(recipe.getInstructions()));
             out = String.format(out,
                     recipe.getId(),
                     recipe.getTitle(),

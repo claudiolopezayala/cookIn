@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
+import java.util.List;
 import org.lasalle.services.model.Recipe;
 
 /**
@@ -15,6 +17,37 @@ import org.lasalle.services.model.Recipe;
  * @author Claudio
  */
 public class ControllerRecipe {
+    public List<Recipe> getUsersRecipes (int userId) throws Exception{
+        String query = "select * from recipes where userId = ?";
+        List<Recipe> recipes = new LinkedList();
+        try {
+            ConnectionMysql connMysql = new ConnectionMysql();
+            Connection conn = connMysql.open();
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, userId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                final int id = rs.getInt("id");
+                final String title = rs.getString("title");
+                final String image = rs.getString("image");
+                final String instructions = rs.getString("instructions");
+                final int rations = rs.getInt("rations");
+                final int timeToCook = rs.getInt("timeToCook");
+                final String publishedDateTime = rs.getString("publishedDateTime");
+                
+                Recipe recipe = new Recipe(id, title, image, instructions, rations, timeToCook, publishedDateTime, userId);
+                recipes.add(recipe);
+            }
+            rs.close();
+            pstm.close();
+            connMysql.close();
+            
+        } catch(Exception | Error e) {
+           throw e;
+        }
+        return recipes;
+    }
+    
     public Recipe getRecipe (int id)throws Exception {
         String query = "SELECT * FROM recipes WHERE id = ?";
         try {

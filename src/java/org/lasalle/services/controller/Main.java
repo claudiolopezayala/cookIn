@@ -25,7 +25,7 @@ public class Main {
         ControllerFollowers controllerFollowers = new ControllerFollowers();
         try{
 //            controllerFollowers.deleteFollow(3, 2);
-            var response = controllerComments.createComment("coments", 1, 1);
+            var response = controllerRecipe.getUsersRecipes(1);
             Gson gson = new Gson();
             String out = gson.toJson(response);
             System.out.println(out);
