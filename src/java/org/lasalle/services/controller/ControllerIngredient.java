@@ -10,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import org.lasalle.services.model.Comment;
 import org.lasalle.services.model.Ingredient;
-import org.lasalle.services.model.Recipe;
 
 /**
  *

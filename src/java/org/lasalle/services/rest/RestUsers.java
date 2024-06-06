@@ -13,9 +13,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
-import org.lasalle.services.controller.ControllerIngredient;
 import org.lasalle.services.controller.ControllerUsers;
-import org.lasalle.services.model.Ingredient;
 import org.lasalle.services.model.User;
 
 /**

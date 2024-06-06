@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import org.lasalle.services.model.Recipe;
-import org.lasalle.services.model.User;
 
 /**
  *
