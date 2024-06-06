@@ -23,10 +23,10 @@ import org.lasalle.services.model.User;
  *
  * @author Claudio
  */
-@Path("Ingredients")
+@Path("ingredients")
 public class RestIngredients {
     
-    @Path("Ingredients")
+    @Path("ingredients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response ingredients (@QueryParam("recipeId") int recipeId){
@@ -40,7 +40,7 @@ public class RestIngredients {
                                         "id": %s,
                                         "ingredient": "%s",
                                         "amount": %s,   
-                                        "unitOfMeasure": %s
+                                        "unitOfMeasure": "%s"
                                     },
                                     """;
                 ingredientString = String.format(ingredientString, ingredient.getId(), ingredient.getIngredient(), ingredient.getAmount(), ingredient.getUnitOfMeasure());
@@ -71,15 +71,24 @@ public class RestIngredients {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response recipe (@FormParam("ingredient") String title,
-                            @FormParam("amount") String image,
-                            @FormParam("unitOfMeasure") String instructions,
-                            @FormParam("recipeId") int rations,
-                            @FormParam("timeToCook") int timeToCook,
-                            @FormParam("userId") int userId ){
+                            @FormParam("amount") Double amount,
+                            @FormParam("unitOfMeasure") String unitOfMeasure,
+                            @FormParam("recipeId") int recipeId ){
         
-        try {   
-            ControllerRecipe controller = new ControllerRecipe();
-            controller.createRecipe(title, image, instructions, rations, timeToCook, userId);
+        try {
+            ControllerIngredient controller = new ControllerIngredient();
+            Ingredient ingredient = controller.createIngredient(title, amount, unitOfMeasure, recipeId);
+            String out = """
+                  {
+                  "id": %s,
+                  "ingredient": "%s",
+                  "amount": %s,
+                  "unitOfMeasure": "%s",
+                  "recipeId": %s
+                  }
+                  """;
+            out = String.format(out, ingredient.getId(), ingredient.getIngredient(), ingredient.getAmount(), ingredient.getUnitOfMeasure(), ingredient.getRecipeId());
+            return Response.ok(out).build();
         } catch (Exception e){
             String out = """
                   {"exception" : "%s"}
@@ -96,7 +105,6 @@ public class RestIngredients {
             
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
          }
-        return Response.ok().build();
 
     }
 }

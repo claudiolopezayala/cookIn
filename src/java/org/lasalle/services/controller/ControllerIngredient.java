@@ -30,9 +30,6 @@ public class ControllerIngredient {
             pstm.setDouble(2, amount);
             pstm.setString(3, unitOfMeasure);
             pstm.setInt(4, recipeId);
-            pstm.execute();
-            pstm.close();
-            connMysql.close();
             pstm.executeUpdate();
             ResultSet rs = pstm.getGeneratedKeys();
             if (rs.next()) {

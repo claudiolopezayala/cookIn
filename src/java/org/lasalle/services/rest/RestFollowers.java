@@ -148,11 +148,12 @@ public class RestFollowers {
             Follow follow = controller.addFollow(accountFollowedId, accountThatFollowsId);
             String out = """
                   {
+                  "id": %s,
                   "accountFollowedId": %s,
                   "accountThatFollowsId": %s      
                   }
                   """;
-            out = String.format(out, follow.getAccountFollowedId(), follow.getAccountThatFollows());
+            out = String.format(out, follow.getId(), follow.getAccountFollowedId(), follow.getAccountThatFollows());
             return Response.ok(out).build();
         } catch (Exception e){
             String out = """
